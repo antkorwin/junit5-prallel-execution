@@ -21,9 +21,12 @@ public class TestSuiteProfilerExtension implements BeforeAllCallback, AfterAllCa
                                                k -> System.currentTimeMillis());
 
         TestDescriptor testDescriptor =
-                (TestDescriptor) FieldUtils.readField(context.getRoot(), "testDescriptor", true);
+                (TestDescriptor) FieldUtils.readField(context.getRoot(),
+                                                      "testDescriptor",
+                                                      true);
 
-        getStore(context).getOrComputeIfAbsent("testClassCount", k -> testDescriptor.getChildren().size());
+        getStore(context).getOrComputeIfAbsent("testClassCount",
+                                               k -> testDescriptor.getChildren().size());
     }
 
     @Override
@@ -32,7 +35,10 @@ public class TestSuiteProfilerExtension implements BeforeAllCallback, AfterAllCa
         int testClassCount = (int) getStore(context).get("testClassCount") - 1;
 
         if (testClassCount <= 0) {
-            double duration = ((double) System.currentTimeMillis() - getStartTime(context)) / 1000;
+
+            double duration = ((double) System.currentTimeMillis() -
+                               getStartTime(context)) / 1000;
+
             System.out.println("\n>> Execution Time = " + duration + " sec.\n");
         }
 
